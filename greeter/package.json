@@ -1,0 +1,15 @@
+{
+  "name": "greeter",
+  "version": "0.0.1",
+  "description": "a repository for testing out janus features",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "solc": "^0.6.12",
+    "web3": "^1.3.0"
+  }
+}
