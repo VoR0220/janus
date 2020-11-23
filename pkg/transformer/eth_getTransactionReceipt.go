@@ -1,6 +1,8 @@
 package transformer
 
 import (
+	"fmt"
+
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/qtumproject/janus/pkg/eth"
 	"github.com/qtumproject/janus/pkg/qtum"
@@ -34,6 +36,7 @@ func (p *ProxyETHGetTransactionReceipt) request(req *qtum.GetTransactionReceiptR
 	var receipt qtum.GetTransactionReceiptResponse
 	if err := p.Qtum.Request(qtum.MethodGetTransactionReceipt, req, &receipt); err != nil {
 		if err == qtum.EmptyResponseErr {
+			fmt.Println("Empty Response Error found here RJ")
 			return nil, nil
 		}
 		return nil, err
@@ -59,7 +62,7 @@ func (p *ProxyETHGetTransactionReceipt) request(req *qtum.GetTransactionReceiptR
 		Status:            status,
 
 		// see Known issues
-		LogsBloom: "",
+		LogsBloom: utils.AddHexPrefix(getLogsBloom(logs)),
 	}
 
 	// contractAddress : DATA, 20 Bytes - The contract address created, if the transaction was a contract creation, otherwise null.

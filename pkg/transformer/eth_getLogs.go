@@ -26,10 +26,6 @@ func (p *ProxyETHGetLogs) Request(rawreq *eth.JSONRPCRequest) (interface{}, erro
 		return nil, err
 	}
 
-	if len(req.Topics) != 0 {
-		return nil, errors.New("topics is not supported yet")
-	}
-
 	qtumreq, err := p.ToRequest(&req)
 	if err != nil {
 		return nil, err
@@ -78,7 +74,7 @@ func (p *ProxyETHGetLogs) ToRequest(ethreq *eth.GetLogsRequest) (*qtum.SearchLog
 				return nil, err
 			}
 		}
-		for i, _ := range addresses {
+		for i := range addresses {
 			addresses[i] = utils.RemoveHexPrefix(addresses[i])
 		}
 	}
@@ -87,6 +83,7 @@ func (p *ProxyETHGetLogs) ToRequest(ethreq *eth.GetLogsRequest) (*qtum.SearchLog
 		Addresses: addresses,
 		FromBlock: from,
 		ToBlock:   to,
+		Topics:    ethreq.Topics,
 	}, nil
 }
 
